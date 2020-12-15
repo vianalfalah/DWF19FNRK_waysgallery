@@ -12,9 +12,21 @@ module.exports = (sequelize, DataTypes) => {
         as: "posts",
         foreignKey: "userID",
       });
+      User.hasMany(models.Art, {
+        as: "arts",
+        foreignKey: "userID",
+      });
       User.hasOne(models.Profile, {
         as: "profile",
         foreignKey: "userID",
+      });
+      User.hasMany(models.Hired, {
+        as: "orders",
+        foreignKey: "orderTo",
+      });
+      User.hasMany(models.Hired, {
+        as: "offers",
+        foreignKey: "orderBy",
       });
     }
   }
@@ -23,6 +35,8 @@ module.exports = (sequelize, DataTypes) => {
       fullName: DataTypes.STRING,
       email: DataTypes.STRING,
       password: DataTypes.STRING,
+      avatar: DataTypes.STRING,
+      greeting: DataTypes.STRING,
     },
     {
       sequelize,

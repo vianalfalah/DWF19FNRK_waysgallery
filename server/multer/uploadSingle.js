@@ -1,7 +1,6 @@
 const multer = require("multer");
-const path = require("path");
 
-exports.uploadImage = (field) => {
+exports.uploadSingle = (fileName) => {
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, "uploads");
@@ -12,9 +11,7 @@ exports.uploadImage = (field) => {
   });
 
   const imageFilter = function (req, file, cb) {
-    if (
-      !file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|webp|GIF)$/)
-    ) {
+    if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
       req.fileValidationError = {
         message: "Only image files are allowed!",
       };
@@ -31,14 +28,14 @@ exports.uploadImage = (field) => {
     limits: {
       fileSize: maxSize,
     },
-  }).array(field);
+  }).single(fileName);
 
   return (req, res, next) => {
     upload(req, res, function (err) {
       if (req.fileValidationError)
         return res.status(400).send(req.fileValidationError);
 
-      if (!req.files && !err)
+      if (!req.file && !err)
         return res.status(400).send({
           message: "Please select an image to upload",
         });
