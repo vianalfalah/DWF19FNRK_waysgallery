@@ -1,0 +1,9 @@
+.landing {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+}
+
+.tnr {
+  font-family: "Times New Roman", Times, serif !important;
+}

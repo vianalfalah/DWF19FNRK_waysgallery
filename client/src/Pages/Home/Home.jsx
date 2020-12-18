@@ -8,8 +8,12 @@ function Home() {
       <div>
         <Header />
       </div>
-      <div className="container waves-box wrapper-list-product">
-        <ListPosts />
+      <div
+        style={{ marginTop: "200px", marginBottom: "51px", marginLeft: 100 }}
+      >
+        <div className="d-flex justify-content-center">
+          <ListPosts />
+        </div>
       </div>
     </div>
   );

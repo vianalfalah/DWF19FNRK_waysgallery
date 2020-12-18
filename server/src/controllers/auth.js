@@ -1,4 +1,4 @@
-const { User } = require("../../models");
+const { User, Profile } = require("../../models");
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -10,8 +10,6 @@ exports.register = async (req, res) => {
       fullName: Joi.string().min(5).required(),
       email: Joi.string().email().required(),
       password: Joi.string().min(8).required(),
-      avatar: Joi.string(),
-      greeting: Joi.string(),
     });
 
     const { error } = schema.validate(req.body, {
@@ -37,15 +35,18 @@ exports.register = async (req, res) => {
       });
     }
 
-    const { fullName, email, password, avatar, greeting } = req.body;
+    const { fullName, email, password } = req.body;
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
       ...req.body,
       password: hashedPassword,
+    });
+
+    await Profile.create({
+      userID: user.id,
       avatar: "default",
-      greeting: "Hai, Nice To Meet You !!!",
     });
 
     const privateKey = "vian-alfalah";

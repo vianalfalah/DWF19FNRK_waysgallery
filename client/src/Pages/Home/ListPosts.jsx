@@ -44,14 +44,6 @@ const ListP = () => {
                   src={`${"http://localhost:5000/uploads/"}${images.images}`}
                 />
               ))}
-              <Card.Body>
-                <Card.Text className="c-list-card-title">
-                  {post.title}
-                </Card.Text>
-                <Card.Text className="c-list-card-desc">
-                  {post.description}
-                </Card.Text>
-              </Card.Body>
             </Card>
           </Col>
         </Link>

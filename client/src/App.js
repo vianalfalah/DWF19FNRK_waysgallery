@@ -8,6 +8,7 @@ import Home from "./Pages/Home/Home";
 import PrivateRoute from "./component/PrivateRoute";
 import { Context } from "./Context/Context";
 import { loadedService } from "./configs/services";
+import Landing from "./Pages/Landing/Landing";
 
 function App() {
   const [state, dispatch] = useContext(Context);
@@ -18,9 +19,6 @@ function App() {
       await loadedService(dispatch);
       setLoading(false);
     })();
-    dispatch({
-      type: "UPDATE_CART",
-    });
   }, [dispatch]);
   return (
     <div className="main-container">
@@ -34,9 +32,9 @@ function App() {
           </div>
         ) : (
           <Switch>
-            {/* <Route exact path="/" component={Landing} /> */}
-            <Route exact path="/home" component={Home} />
-            <Route exact path="/detail/:id" component={Detail} />
+            <Route exact path="/" component={Landing} />
+            <PrivateRoute exact path="/home" component={Home} />
+            <PrivateRoute exact path="/detail/:id" component={Detail} />
             {/* 
             <PrivateRoute exact path="/ship" component={Ship} />
             <PrivateRoute exact path="/cart" component={Cart} />

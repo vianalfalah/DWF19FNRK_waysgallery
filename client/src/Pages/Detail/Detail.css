@@ -97,3 +97,15 @@
   font-weight: bold;
   transition: 0.2s ease-in-out;
 }
+
+.form-detail .btn {
+  position: absolute;
+  width: 544px;
+  height: 40px;
+  left: 490px;
+  top: 460px;
+  color: white;
+  font-family: Poppins;
+  background: #613d2b;
+  border-radius: 5px;
+}

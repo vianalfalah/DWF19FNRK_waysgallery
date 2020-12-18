@@ -1,4 +1,4 @@
-const { User, Art, Post, Photo } = require("../../models");
+const { User, Art, Post, Photo, Profile } = require("../../models");
 const responSuccess = "Response Success";
 const Joi = require("joi");
 
@@ -8,9 +8,16 @@ exports.getUser = async (req, res) => {
     const user = await User.findOne({
       where: { id },
       attributes: {
-        exclude: ["createdAt", "updatedAt", "password", "greeting"],
+        exclude: ["createdAt", "updatedAt", "password"],
       },
       include: [
+        {
+          model: Profile,
+          as: "profile",
+          attributes: {
+            exclude: ["createdAt", "updatedAt", "userID", "id"],
+          },
+        },
         {
           model: Post,
           as: "posts",
@@ -18,7 +25,7 @@ exports.getUser = async (req, res) => {
           include: {
             model: Photo,
             as: "photos",
-            attributes: { exclude: ["createdAt", "updatedAt", "postID"] },
+            attributes: { exclude: ["createdAt", "updatedAt"] },
           },
         },
         {
@@ -28,9 +35,15 @@ exports.getUser = async (req, res) => {
         },
       ],
     });
+    if (!user) {
+      return res.status(404).send({
+        status: `User With id: ${id} Not Found`,
+        data: null,
+      });
+    }
     res.status(200).json({
       status: "success",
-      message: "Posts loaded successfully",
+      message: "Get User Profile Success",
       data: {
         user,
       },
@@ -46,14 +59,76 @@ exports.getUser = async (req, res) => {
   }
 };
 
-exports.editUser = async (req, res) => {
+exports.getUserProfileById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findOne({
+      where: { id },
+      attributes: {
+        exclude: ["createdAt", "updatedAt", "password"],
+      },
+      include: [
+        {
+          model: Profile,
+          as: "profile",
+          attributes: {
+            exclude: ["createdAt", "updatedAt", "userID"],
+          },
+        },
+        {
+          model: Post,
+          as: "posts",
+          attributes: {
+            exclude: ["createdAt", "updatedAt", "userID"],
+          },
+          include: {
+            model: Photo,
+            as: "photos",
+            attributes: {
+              exclude: ["createdAt", "updatedAt"],
+            },
+          },
+        },
+        {
+          model: Art,
+          as: "arts",
+          attributes: {
+            exclude: ["createdAt", "updatedAt", "userID"],
+          },
+        },
+      ],
+    });
+    if (!user) {
+      return res.status(404).send({
+        status: `User With id: ${id} Not Found`,
+        data: null,
+      });
+    }
+    res.send({
+      status: responSuccess,
+      message: "succesfully get profile",
+      data: user,
+    });
+  } catch (error) {
+    console.log(error);
+    res.satus(500).json({
+      status: "error",
+      error: {
+        message: "Internal Server Error",
+      },
+    });
+  }
+};
+
+exports.editProfileUser = async (req, res) => {
   try {
     const { body } = req.body;
-    const { id } = req.user;
+    const { id: userID } = req.user;
+
     const schema = Joi.object({
       avatar: Joi.string(),
       greeting: Joi.string().min(5),
-      fullname: Joi.string().min(5),
+      fullName: Joi.string().min(5),
     });
     const { error } = schema.validate(body, {
       abortEarly: false,
@@ -68,20 +143,37 @@ exports.editUser = async (req, res) => {
       });
     }
 
-    const { avatar } = req.body;
-
-    const user = await User.update({
-      where: {
-        id,
-      },
-      ...req.body,
-      avatar: req.filename,
-    });
+    const profile = await Profile.findOne({ where: { userID } });
+    if (!profile) {
+      return res.status(404).send({
+        status: `Profile With id: ${id} Not Found`,
+        data: null,
+      });
+    }
+    // if (body.fullName) {
+    //   await User.update({ fullName: body.fullName }, { where: { id: userID } });
+    // }
+    await Profile.update(
+      { ...req.body, avatar: req.file.filename },
+      {
+        where: { userID },
+      }
+    );
 
     console.log(body);
     const afterUpdate = await User.findOne({
       where: {
-        id: user.id,
+        id: userID,
+      },
+      attributes: {
+        exclude: ["createdAt", "updatedAt", "password"],
+      },
+      include: {
+        model: Profile,
+        as: "profile",
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "userID", "id"],
+        },
       },
     });
 
@@ -106,47 +198,21 @@ exports.editUser = async (req, res) => {
 exports.addArt = async (req, res) => {
   try {
     const { body } = req.body;
+    const { id: userID } = req.user;
     const file = req.files;
 
-    const schema = Joi.object({
-      images: Joi.array().required(),
-    });
-
-    const { error } = schema.validate(
-      { ...req.body, images: req.files },
-      {
-        abortEarly: false,
-      }
+    const art = [];
+    await Promise.all(
+      file.map(async (file) => {
+        return await Art.create({ userID, images: file.path });
+      })
     );
-
-    if (error) {
-      return res.status(400).send({
-        status: "Validation Error",
-        error: {
-          message: error.details.map((error) => error.message),
-        },
-      });
-    }
-
-    const { images } = req.body;
-    const { id: userID } = req.user;
-    const art = await Art.create({
-      images: req.files,
-      userID,
-    });
-
-    const afterAdd = await Art.findOne({
-      where: { id: art.id },
-      attributes: {
-        exclude: ["createdAt", "updatedAt", "userID"],
-      },
-    });
 
     res.send({
       status: responSuccess,
       message: "Arts Succesfully Added",
       data: {
-        art: afterAdd,
+        art,
       },
     });
   } catch (error) {

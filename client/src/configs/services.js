@@ -6,14 +6,14 @@ export const baseURL = "http://localhost:5000/uploads/";
 export const login = async (dispatch, body, seterrLogin) => {
   try {
     const response = await API.post("/login", body);
-    await setAuthToken(response.data.data.token);
-    localStorage.setItem("token", response.data.data.token);
+    await setAuthToken(response.data.data.user.token);
+    localStorage.setItem("token", response.data.data.user.token);
 
-    const getProfile = await API.get("/my-profile");
-    localStorage.setItem("profile", JSON.stringify(getProfile.data.data));
+    const getUser = await API.get("/user");
+    // localStorage.setItem("user", JSON.stringify(getUser.data.data));
     dispatch({
       type: "LOGIN",
-      payload: { ...getProfile.data.data },
+      payload: { ...getUser.data.data },
     });
   } catch (error) {
     seterrLogin(true);
@@ -26,14 +26,14 @@ export const register = async (dispatch, body, seterrRegis) => {
     console.log(body);
     const response = await API.post("/register", body);
     console.log(response.data.data.token);
-    setAuthToken(response.data.data.token);
-    localStorage.setItem("token", response.data.data.token);
-    const getProfile = await API.get("/my-profile");
-    localStorage.setItem("profile", JSON.stringify(getProfile.data.data));
+    await setAuthToken(response.data.data.user.token);
+    localStorage.setItem("token", response.data.data.user.token);
+    const getUser = await API.get("/user");
+    localStorage.setItem("user", JSON.stringify(getUser.data.data));
 
     dispatch({
       type: "LOGIN",
-      payload: { ...getProfile.data.data.profile },
+      payload: { ...getUser.data.data },
     });
   } catch (error) {
     seterrRegis(true);
@@ -48,10 +48,10 @@ export const loadedService = async (dispatch) => {
       return null;
     }
     setAuthToken(token);
-    const getProfile = await API.get("/my-profile");
+    const getUser = await API.get("/user");
     dispatch({
       type: "LOADED",
-      payload: { ...getProfile.data.data },
+      payload: { ...getUser.data.data },
     });
   } catch (error) {
     console.log(error);
@@ -60,7 +60,7 @@ export const loadedService = async (dispatch) => {
 
 export const logoutService = (dispatch) => {
   localStorage.removeItem("token");
-  localStorage.removeItem("profile");
+  localStorage.removeItem("users");
   setAuthToken();
   dispatch({
     type: "LOGOUT",
@@ -90,15 +90,14 @@ export const getPostById = async (id) => {
   }
 };
 
-export const addProductService = (data, cb) => {
-  const config = {
-    headers: {
-      "content-type": "multipart/form-data",
-    },
-  };
-  API.post("/product", data, config)
-    .then(() => cb())
-    .catch((error) => console.error(error));
+export const getProfile = async (cbSuccess) => {
+  try {
+    const profile = await API.get("/user");
+    // cbSuccess(profile.data.data);
+    // cbSuccess();
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const getTransactions = async (cbSuccess) => {

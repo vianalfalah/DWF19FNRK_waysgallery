@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import { login } from "../configs/services";
 import "./Login.css";
-// import { connect } from "react-redux";
-// import { handleLogin } from "./../redux/action/Login/action.jsx";
 
 function ModalLogin({ show, setShow, switchModal, dispatch, onHide }) {
   const [formData, setFormData] = useState({ email: "", password: "" });

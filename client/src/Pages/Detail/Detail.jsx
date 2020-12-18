@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import Header from "./../../elements/Header/Header";
 
 import { getPostById, baseURL } from "../../configs/services";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 import "./Detail.css";
 
@@ -26,21 +26,22 @@ function Detail() {
       <div className="page-detail" style={{ marginTop: 80 }}>
         <div className="form-detail">
           <div>
-            {post.photos.map((images) => (
+            {post && post.createdBy && (
               <img
                 className="img"
                 alt={post.id}
-                src={`${baseURL}${images.images}`}
+                src={`${baseURL}${post.photos[0].images}`}
               />
-            ))}
+            )}
           </div>
           <p className="title">{post.title}</p>
 
           <p className="desc">{post.description}</p>
 
-          {post.user.map((fullName) => (
-            <p className="price">{fullName.fullName}</p>
-          ))}
+          <p className="price">{post.createdBy.fullName}</p>
+          <Link to={`/profile/${post.createdBy.id}`}>
+            <button className="btn">Hire</button>
+          </Link>
         </div>
       </div>
     </>

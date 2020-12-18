@@ -24,8 +24,39 @@ router.get("/post/:id", getPostById);
 router.delete("/post/:id", auth, deletePost);
 
 //User
-const { getUser, editUser, addArt } = require("../controllers/user");
+const {
+  getUser,
+  getUserProfileById,
+  editProfileUser,
+  addArt,
+} = require("../controllers/user");
 router.get("/user", auth, getUser);
-router.patch("/user", auth, uploadSingle("avatar"), editUser);
+router.get("/user/:id", auth, getUserProfileById);
+router.patch("/user", auth, uploadSingle("avatar"), editProfileUser);
 router.post("/upload-arts", auth, uploadImage("images"), addArt);
+
+//Hired
+const {
+  addOffer,
+  getOrder,
+  getOffer,
+  editHired,
+} = require("../controllers/hire");
+
+router.post("/hired", auth, addOffer);
+router.get("/my-order", auth, getOrder);
+router.get("/my-offer", auth, getOffer);
+router.patch("/hired/:id", auth, editHired);
+
+//Project
+const {
+  sendProject,
+  addProjectFiles,
+  getProjectById,
+} = require("../controllers/project");
+
+router.post("/send-project/:id", auth, sendProject);
+router.get("/project/:id", auth, getProjectById);
+router.post("/add-file/:id", auth, uploadImage("fileName"), addProjectFiles);
+
 module.exports = router;

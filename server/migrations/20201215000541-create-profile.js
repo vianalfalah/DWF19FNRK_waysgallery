@@ -14,9 +14,6 @@ module.exports = {
       greeting: {
         type: Sequelize.STRING,
       },
-      fullName: {
-        type: Sequelize.STRING,
-      },
       userID: {
         allowNull: false,
         type: Sequelize.INTEGER,
