@@ -1,5 +1,5 @@
-import { useContext, useState, useEffect } from "react";
-import Header from "./../../elements/Header/Header";
+import { useState, useEffect } from "react";
+import Header from "./../../component/Header/Header";
 
 import { getPostById, baseURL } from "../../configs/services";
 import { useParams, Link } from "react-router-dom";
@@ -37,8 +37,12 @@ function Detail() {
           <p className="title">{post.title}</p>
 
           <p className="desc">{post.description}</p>
+          <p className="price">
+            {post.createdBy.fullName}
+            {post.createdBy.id}
+          </p>
+          <p className="price">{post.createdBy.id}</p>
 
-          <p className="price">{post.createdBy.fullName}</p>
           <Link to={`/profile/${post.createdBy.id}`}>
             <button className="btn">Hire</button>
           </Link>

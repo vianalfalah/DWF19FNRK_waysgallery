@@ -1,19 +1,21 @@
 import { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Navbar } from "react-bootstrap";
 import { Context } from "../../Context/Context";
 import { logoutService } from "../../configs/services";
 import userIcon from "../../assets/icon/userIcon.png";
 import "./Header.css";
-import { LOGO, PROFILE, LOGOUT } from "./../../configs/icons";
+import { LOGO, PROFILE, LOGOUT } from "../../configs/icons";
 
 function Header() {
   const [state, dispatch] = useContext(Context);
 
   const [showDropdown, setShowDropdown] = useState(false);
+  const history = useHistory();
 
   const onLogout = (e) => {
     logoutService(dispatch);
+    history.push("/");
   };
 
   const _handleOpenDropdown = () => {
@@ -22,7 +24,7 @@ function Header() {
 
   return (
     <>
-      <Navbar fixed="top" className="header-container">
+      <Navbar className="header-container">
         <Link to="/home">
           <div className="logo">
             <img src={LOGO} alt="logo" />
@@ -38,7 +40,7 @@ function Header() {
             onClick={_handleOpenDropdown}
           ></img>
           <div className={`dropdown-content ${showDropdown ? "show" : ""}`}>
-            <Link to="/profile">
+            <Link to="/my-profile">
               <div className="dropdown-btn">
                 <img
                   src={userIcon}

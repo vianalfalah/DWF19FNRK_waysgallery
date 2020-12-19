@@ -4,7 +4,8 @@ import { useContext, useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import Detail from "./Pages/Detail/Detail";
 import Home from "./Pages/Home/Home";
-// import Profile from "./Pages/Profile/Profile";
+import Profile from "./Pages/Profile/Profile";
+import UserProfile from "./Pages/UserProfile/UserProfile";
 import PrivateRoute from "./component/PrivateRoute";
 import { Context } from "./Context/Context";
 import { loadedService } from "./configs/services";
@@ -35,10 +36,12 @@ function App() {
             <Route exact path="/" component={Landing} />
             <PrivateRoute exact path="/home" component={Home} />
             <PrivateRoute exact path="/detail/:id" component={Detail} />
+            <PrivateRoute exact path="/my-profile" component={Profile} />
+            <PrivateRoute exact path="/profile/:id" component={UserProfile} />
             {/* 
             <PrivateRoute exact path="/ship" component={Ship} />
             <PrivateRoute exact path="/cart" component={Cart} />
-            <PrivateRoute exact path="/profile" component={Profile} /> */}
+             */}
           </Switch>
         )}
       </Router>

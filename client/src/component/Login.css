@@ -73,13 +73,13 @@
   font-family: Poppins;
   font-weight: bold;
   margin-bottom: 30px;
-  color: #613d2b;
+  color: #2fc4b2;
 }
 
 input {
   height: 50px;
   border-radius: 5px;
-  border: 2px solid #613d2b;
+  border: 2px solid #2fc4b2;
   background: rgba(97, 61, 43, 0.25);
   padding-left: 12px;
   margin-bottom: 20px;
@@ -90,7 +90,7 @@ input {
   height: 50px;
   border-radius: 5px;
   color: white;
-  background: #613d2b;
+  background: #2fc4b2;
   font-family: Poppins;
   border: none;
   margin-top: 10px;

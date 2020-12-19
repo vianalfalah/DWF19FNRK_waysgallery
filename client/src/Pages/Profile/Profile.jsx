@@ -1,53 +1,61 @@
 import { useState, useEffect } from "react";
-import Header from "./../../elements/Header/Header";
 import { getProfile, baseURL } from "../../configs/services";
-import { useParams, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Header from "../../component/Header/Header";
+import { Button } from "react-bootstrap";
+import "./Profile.css";
 
 function Profile() {
   const [profile, setProfile] = useState();
   useEffect(() => {
-    (async () => {
-      const profile = await getProfile(id);
-      console.log(profile);
-      if (profile) {
-        return setProfile(profile.data.data.profile);
-      }
-    })();
-  }, [id]);
+    getProfile(setProfile);
+    console.log(getProfile);
+  }, []);
 
-  return (
+  return profile ? (
     <>
+      <Header />
       {profile && (
-        <div>
-          <div className="row">
-            <div>
-              <img src={`${baseURL}${profile.profile.avatar}`} />
-              <h1>{profile.fullName}</h1>
-              <h3>{profile.profile.greeting}</h3>
-              <Link to="/edit/my-profile">
-                <button className="btn">Edit Profile</button>
-              </Link>
-            </div>
-            <div>
-              {profile.post.length > 0 && profile.post[0].photo && (
-                <img
-                  className="img-post"
-                  src={`${baseURL}${profile.post[0].photo[0].image}`}
-                />
-              )}
+        <div className="user">
+          <div className="box-avatar">
+            <img
+              className="avatar"
+              src={`${baseURL}${profile.user.profile.avatar}`}
+            />
+            <div className="greets">
+              <h3>{profile.user.fullName}</h3>
+              <h2>{profile.user.profile.greeting}</h2>
             </div>
           </div>
-          <div className="mt-50">
-            <h1>My Work Art</h1>
+          <div className="img-post">
+            <img
+              className="img"
+              src={`${baseURL}${profile.user.posts[0].photos[0].images}`}
+            />
+          </div>
+          <div className="btn-hire">
+            <Link to="/edit/my-profile">
+              <Button className="edit">Edit Profile</Button>
+            </Link>
+          </div>
+          <h1>My Work Art</h1>
+          <div className="box-arts">
             <div className="grid-container">
-              {profile.art.length > 0 &&
-                profile.art.map((art) => (
-                  <img src={`${baseURL}${art.image}`} />
-                ))}
+              <img
+                src={`${"http://localhost:5000/"}${
+                  profile.user.arts[0].images
+                }`}
+              />
             </div>
           </div>
         </div>
       )}
     </>
+  ) : (
+    <div>
+      <Header />
+      <div>Apa tuh</div>
+    </div>
   );
 }
+export default Profile;

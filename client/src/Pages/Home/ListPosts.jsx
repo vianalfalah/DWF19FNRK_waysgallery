@@ -30,22 +30,17 @@ const ListP = () => {
   return (
     <>
       {posts.map((post) => (
-        <Link
-          to={`/detail/${post.id}`}
-          key={post.id}
-          className="text-decoration-none"
-        >
-          <Col>
-            <Card className="c-list-card">
-              {post.photos.map((images) => (
-                <Card.Img
-                  className="c-list-card-img"
-                  variant="top"
-                  src={`${"http://localhost:5000/uploads/"}${images.images}`}
-                />
-              ))}
+        <Link to={`/detail/${post.id}`} key={post.id}>
+          <div className="list-card">
+            <Card>
+              <Card.Img
+                variant="top"
+                src={`${"http://localhost:5000/uploads/"}${
+                  post.photos[0].images
+                }`}
+              />
             </Card>
-          </Col>
+          </div>
         </Link>
       ))}
     </>

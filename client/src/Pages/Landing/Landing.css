@@ -1,9 +1,95 @@
 .landing {
-  display: flex;
-  align-items: center;
-  height: 100vh;
+  position: relative;
+  width: 1440px;
+  height: 900px;
+
+  background: #f9f9f9;
 }
 
-.tnr {
-  font-family: "Times New Roman", Times, serif !important;
+.title-group {
+  position: absolute;
+  width: 486px;
+  height: 123px;
+  left: 116px;
+  top: 486px;
+}
+
+.hero-logo {
+  position: absolute;
+  width: 728px;
+  height: 728px;
+  left: 617px;
+  top: 86px;
+}
+
+.vector2 {
+  position: absolute;
+  width: 467.75px;
+  height: 428.1px;
+  left: -68px;
+  top: 420px;
+}
+.ways-gallery {
+  position: absolute;
+  width: 324px;
+  height: 204px;
+  left: 116px;
+  top: 275px;
+}
+.vector {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  left: 300px;
+  top: 230px;
+}
+
+.wrap1 {
+  position: absolute;
+  width: 486px;
+  height: 123px;
+  left: 116px;
+  top: 486px;
+}
+
+.wrap1 .title {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 22px;
+}
+
+.join {
+  position: absolute;
+  width: 100px;
+  height: 30px;
+  left: 116px;
+  top: 579px;
+  background: #2fc4b2;
+  border-radius: 5px;
+  color: white;
+  font-family: Poppins;
+}
+
+.loginn {
+  position: absolute;
+  width: 100px;
+  height: 30px;
+  left: 234px;
+  top: 579px;
+  color: black;
+  background: #e7e7e7;
+  border-radius: 5px;
+  font-family: Poppins;
+}
+
+.grp-btn p {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
 }

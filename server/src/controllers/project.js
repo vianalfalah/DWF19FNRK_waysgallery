@@ -23,7 +23,7 @@ exports.sendProject = async (req, res) => {
       });
     }
     const { body } = req.body;
-    const scema = Joi.object({
+    const schema = Joi.object({
       description: Joi.string().min(8).required(),
     });
     const { error } = schema.validate(
@@ -37,7 +37,7 @@ exports.sendProject = async (req, res) => {
       hiredID,
     });
     res.send({
-      status: responseSuccess,
+      status: responSuccess,
       message: "succesfully send project",
       data: {
         project: {
@@ -87,7 +87,7 @@ exports.addProjectFiles = async (req, res) => {
     });
 
     res.send({
-      status: responseSuccess,
+      status: responSuccess,
       message: "Succesfully add Files",
       data: { project: afterAdd },
     });
@@ -121,7 +121,7 @@ exports.getProjectById = async (req, res) => {
     }
 
     res.send({
-      status: responseSuccess,
+      status: responSuccess,
       message: "Succesfully Get Project",
       data: { project },
     });
