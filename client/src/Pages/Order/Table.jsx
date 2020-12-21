@@ -1,10 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { editStatusHired } from "../../configs/services";
+import { Modal } from "react-bootstrap";
 import "./Table.css";
 import { SUCCESS, UNSUCCESS } from "../../configs/icons";
-import SEND from "../../assets/icon/truck.svg";
+import WAIT from "../../assets/icons/wait.svg";
+import PROGRESS from "../../assets/icons/progress.png";
+import format from "../../configs/formatCurency";
 
+const ModalView = ({ show, setShow, data, table, index }) => {
+  const handleClose = () => setShow(false);
+  console.log(data);
+  return (
+    <Modal centered show={show} setShow={setShow} onHide={handleClose}>
+      <div style={{ margin: 20, fontFamily: "Poppins" }}>
+        <p>Title : {table ? data.offers.title : data.title}</p>
+        <p>
+          Description : {table ? data.offers.description : data.description}
+        </p>
+        <p style={{ color: "#00E016" }}>
+          Price : {format(table ? data.offers.price : data.price)}
+        </p>
+      </div>
+    </Modal>
+  );
+};
 function Table({ data, table }) {
   return (
     <table className="table-income" border="2">
@@ -29,18 +49,32 @@ function Table({ data, table }) {
     </table>
   );
 }
-const Td = ({ data, index, table }) => {
+const Td = ({ data, index, table, dispatch, state }) => {
   const [status, setStatus] = useState(data.status);
+  const [showView, setShowView] = useState(false);
   const onAction = (status) => {
     editStatusHired(data.id, { status });
     setStatus(status);
+  };
+
+  const handleModal = () => {
+    setShowView(true);
   };
   return (
     <>
       <tr>
         <td>{+index + 1}</td>
         <td>{table ? data.offers.fullName : data.orders.fullName}</td>
-        <td>{data.title}</td>
+        <td>
+          <div onClick={handleModal}>{data.title}</div>
+          <ModalView
+            show={showView}
+            setShow={setShowView}
+            dispatch={dispatch}
+            state={state}
+            data={data}
+          />
+        </td>
         <td>{new Date(data.startDate).toUTCString()}</td>
         <td>{new Date(data.endDate).toUTCString()}</td>
         <td>
@@ -57,17 +91,17 @@ const Td = ({ data, index, table }) => {
         <td>
           {status === "Success" && !table ? (
             <Link to={`/project/${data.projects.id}`}>
-              <button className="action-succsess cursor">Cek Project</button>
+              <button className="cek">Cek Project</button>
             </Link>
           ) : status === "Success" ? (
             <div className="item-center">
-              <i className="fas fa-check status-check"></i>
+              <img src={SUCCESS} />
             </div>
           ) : status === "On Progress" && table ? (
             <Link to={`/send-project/${data.id}`}>
-              <button className="action-succsess cursor">Submit</button>
+              <button className="cek">Submit</button>
             </Link>
-          ) : status === "Waiting Approve" && !table ? (
+          ) : status === "Waiting Approve" && table ? (
             <div className="item-center">
               <button
                 className="btn-action cancell"
@@ -84,11 +118,11 @@ const Td = ({ data, index, table }) => {
             </div>
           ) : status === "Waiting Approve" ? (
             <div className="item-center">
-              <i className="fas fa-check status-check"></i>
+              <img src={WAIT} />
             </div>
           ) : (
             <div className="item-center">
-              {table ? <i className="fas fa-times status-cancel"></i> : "Wait"}
+              {table ? <img src={UNSUCCESS} /> : <img src={PROGRESS} />}
             </div>
           )}
         </td>

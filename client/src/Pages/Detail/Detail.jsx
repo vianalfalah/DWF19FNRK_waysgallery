@@ -23,30 +23,40 @@ function Detail() {
   return post ? (
     <>
       <Header />
-      <div className="page-detail" style={{ marginTop: 80 }}>
-        <div className="form-detail">
-          <div>
-            {post && post.createdBy && (
-              <img
-                className="img"
-                alt={post.id}
-                src={`${baseURL}${post.photos[0].images}`}
-              />
-            )}
-          </div>
-          <p className="title">{post.title}</p>
 
-          <p className="desc">{post.description}</p>
-          <p className="price">
-            {post.createdBy.fullName}
-            {post.createdBy.id}
-          </p>
-          <p className="price">{post.createdBy.id}</p>
-
-          <Link to={`/profile/${post.createdBy.id}`}>
-            <button className="btn">Hire</button>
-          </Link>
-        </div>
+      <div className="post-info">
+        <img
+          className="post-avatar"
+          src={`${baseURL}${post.createdBy.profile.avatar}`}
+        />
+        <p className="post-name">{post.title}</p>
+        <p className="post-title">{post.createdBy.fullName}</p>
+        <Link to={`/profile/${post.createdBy.id}`}>
+          <button className="btn">Hire</button>
+        </Link>
+      </div>
+      <div className="post-img">
+        {post && post.createdBy && (
+          <>
+            <img
+              className="img1"
+              alt={post.id}
+              src={`${baseURL}${post.photos[0].images}`}
+            />
+            <img
+              className="img2"
+              alt={post.id}
+              src={`${baseURL}${post.photos[1].images}`}
+            />
+          </>
+        )}
+      </div>
+      <div className="post-desc">
+        <p>
+          👋 Say Hello{" "}
+          <b style={{ color: " #2fc4b2" }}>{post.createdBy.email}</b>
+        </p>
+        <p>{post.description}</p>
       </div>
     </>
   ) : (

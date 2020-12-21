@@ -15,16 +15,16 @@ function Project() {
       <Header />
       <div>
         {project && project.files && (
-          <div>
+          <div style={{ marginBottom: 30 }}>
             <div>
               <img
                 className="img-view"
                 src={`${baseURL}${project.files[0].fileName}`}
               />
-              <img
+              {/* <img
                 className="img-view1"
                 src={`${baseURL}${project.files[1].fileName}`}
-              />
+              /> */}
             </div>
             <div className="desc-view">
               <h2>{project.description}</h2>

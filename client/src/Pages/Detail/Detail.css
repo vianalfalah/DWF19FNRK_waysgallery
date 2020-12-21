@@ -1,111 +1,111 @@
-.page-detail {
-  position: relative;
-  background: #ffffff;
+.post-img {
+  left: 381px;
+  top: 115px;
 }
-.form-detail {
+.post-img .img1 {
   position: absolute;
-  width: 1035px;
-  height: 550px;
-  left: 195px;
-  top: 40px;
-}
-
-.form-detail .img {
-  position: absolute;
-  width: 436px;
-  height: 500px;
+  width: 729px;
+  height: 545px;
+  left: 381px;
+  top: 234px;
+  border: 1px solid #2fc4b2;
+  border-radius: 5px;
 }
 
-.form-detail .title {
+.post-img .img2 {
   position: absolute;
-  width: 500px;
-  height: 66px;
-  left: 490px;
-
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 48px;
-  line-height: 66px;
-  /* identical to box height */
-
-  color: #613d2b;
+  width: 135px;
+  height: 90px;
+  left: 678px;
+  top: 790px;
+  border: 1px solid #2fc4b2;
+  border-radius: 5px;
+}
+.post-info {
+  top: 150px;
+  width: 730px;
+  justify-content: center;
+  display: flex;
+}
+.post-info .post-avatar {
+  width: 60px;
+  height: 60px;
+  margin-top: 30px;
+  margin-left: 100px;
+  clip-path: circle();
 }
 
-.form-detail .stock {
+.post-info .post-name {
   position: absolute;
-  width: 100px;
+  width: 177px;
   height: 25px;
-  left: 490px;
-  top: 80px;
+  left: 461px;
+  top: 157px;
 
-  font-family: Poppins;
+  font-family: Avenir;
   font-style: normal;
-  font-weight: normal;
+  font-weight: 900;
   font-size: 18px;
   line-height: 25px;
   /* identical to box height */
 
-  color: #974a4a;
-}
-
-.form-detail .desc {
-  position: absolute;
-  width: 544px;
-  height: 200px;
-  left: 490px;
-  top: 130px;
-
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
-  line-height: 25px;
-  text-align: justify;
+  display: flex;
+  align-items: center;
 
   color: #000000;
 }
 
-.form-detail .price {
+.post-info .post-title {
   position: absolute;
-  width: 200px;
-  height: 33px;
-  left: 850px;
-  top: 390px;
+  width: 39px;
+  height: 19px;
+  left: 461px;
+  top: 187px;
 
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #000000;
+}
+.post-info .btn {
+  position: absolute;
+  width: 100px;
+  height: 32px;
+  left: 1007px;
+  top: 166px;
+
+  background: #2fc4b2;
+  color: white;
+  border-radius: 5px;
+  border: 0;
   font-family: Poppins;
   font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 33px;
-  /* identical to box height */
-
-  color: #974a4a;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
 }
 
-.form-detail .add-cart {
+.post-desc {
   position: absolute;
-  width: 544px;
-  height: 40px;
-  left: 490px;
-  top: 460px;
-  background-color: #613d2b;
-  border: none;
-  border-radius: 5px;
-  color: #fff;
-  padding: 8px 32px;
-  font-weight: bold;
-  transition: 0.2s ease-in-out;
-}
+  width: 729px;
+  height: 150px;
+  left: 381px;
+  top: 907px;
+  margin-bottom: 100px;
 
-.form-detail .btn {
-  position: absolute;
-  width: 544px;
-  height: 40px;
-  left: 490px;
-  top: 460px;
-  color: white;
-  font-family: Poppins;
-  background: #613d2b;
-  border-radius: 5px;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 14px;
+  line-height: 19px;
+
+  color: #000000;
 }

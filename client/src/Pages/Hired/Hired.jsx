@@ -1,16 +1,38 @@
 import Header from "../../component/Header/Header";
-import { useState } from "react";
-import { useHistory, useParams, withRouter } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import { addHired } from "../../configs/services";
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 // import DatePicker from "react-datepicker";
 import "./Hired.css";
 
+function ModalAdd(props) {
+  useEffect(() => {
+    if (props.show === true) {
+      setTimeout(() => {
+        props.setShow(false);
+        props.custom();
+      }, 3000);
+    }
+  });
+
+  return (
+    <Modal {...props} centered>
+      <div className="modal-add">
+        <p className="modal-title">
+          We have sent your offer, please wait for the user to accept it
+        </p>
+      </div>
+    </Modal>
+  );
+}
 function Hired() {
+  const [modalShow, setModalShow] = useState(false);
   const [formData, setFormData] = useState({});
+
   const { id } = useParams();
   const router = useHistory();
-  let history = useHistory()
+  let history = useHistory();
 
   const handleChange = (e) => {
     if (e.target) {
@@ -25,15 +47,22 @@ function Hired() {
 
   const handleButton = (e) => {
     e.preventDefault();
-    if (
-      formData.title &&
-      formData.description &&
-      formData.startDate &&
-      formData.endDate &&
-      formData.price
-    ) {
+    // if (
+    //   formData.title &&
+    //   formData.description &&
+    //   formData.startDate &&
+    //   formData.endDate &&
+    //   formData.price
+    // )
+    {
       const { title, description, startDate, endDate, price } = formData;
       console.log(formData);
+      const body = new FormData();
+      body.append("title", title);
+      body.append("description", description);
+      body.append("startDate", startDate);
+      body.append("endDate", endDate);
+      body.append("price", price);
       addHired(
         {
           title,
@@ -43,9 +72,13 @@ function Hired() {
           price,
           orderTo: id,
         },
-        () => router.push("/home")
+        () => setModalShow(true)
       );
+      console.log(addHired);
     }
+  };
+  const redirect = () => {
+    router.push("/order");
   };
   const dateJson = (date) => {
     const dateNew = new Date(date);
@@ -68,13 +101,12 @@ function Hired() {
             name="description"
             rows="5"
             className="description"
+            onChange={(e) => handleChange(e)}
           />
           <div className="date">
             <input
-              placeholder="Start Date"
+              placeholder="Start Project"
               type="date"
-              onFocus="(this.type='date')"
-              onBlur="(this.type='text')"
               id="startDate"
               name="startDate"
               className="start"
@@ -82,7 +114,7 @@ function Hired() {
             />
 
             <input
-              placeholder="End Date"
+              placeholder="End Project"
               type="date"
               id="endDate"
               name="endDate"
@@ -98,11 +130,17 @@ function Hired() {
             onChange={(e) => handleChange(e)}
           />
           <div className="box-btn-binding">
-            
-            <Button className="cancel" onClick={() => history.goBack()}>Cancel</Button>
+            <Button className="cancel" onClick={() => history.goBack()}>
+              Cancel
+            </Button>
             <Button className="post" onClick={(e) => handleButton(e)}>
               Binding
             </Button>
+            <ModalAdd
+              show={modalShow}
+              setShow={setModalShow}
+              custom={redirect}
+            />
           </div>
         </form>
       </div>

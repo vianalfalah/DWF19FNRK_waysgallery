@@ -10,6 +10,8 @@
   width: 646px;
   height: 484px;
   top: 43px;
+  border: 1px solid #2fc4b2;
+  border-radius: 10px;
 }
 
 .greets {
@@ -67,16 +69,14 @@
 
 .box-arts {
   position: absolute;
-  
+
   left: 113px;
-  
+
   top: 780px;
   display: flex;
 }
 .arts {
- 
   display: flex;
- 
 }
 
 .user h1 {
@@ -136,4 +136,3 @@
   background: #2fc4b2;
   border-radius: 5px;
 }
-

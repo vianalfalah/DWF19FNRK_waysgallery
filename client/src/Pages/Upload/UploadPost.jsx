@@ -11,7 +11,7 @@ function UploadPost() {
   const title = useRef();
   const description = useRef();
   const router = useHistory();
-
+  let history = useHistory();
   const handleUpload = (e) => {
     e.preventDefault();
     const body = new FormData();
@@ -45,7 +45,9 @@ function UploadPost() {
             ref={description}
           />
           <div className="box-btn-upload">
-            <Button className="cancel">Cancel</Button>
+            <Button className="cancel" onClick={() => history.goBack()}>
+              Cancel
+            </Button>
             <Button className="post" onClick={(e) => handleUpload(e)}>
               Upload
             </Button>

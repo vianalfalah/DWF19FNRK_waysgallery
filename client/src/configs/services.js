@@ -8,18 +8,15 @@ export const login = async (dispatch, body, seterrLogin) => {
   try {
     const response = await API.post("/login", body);
     await setAuthToken(response.data.data.user.token);
-    
+
     localStorage.setItem("token", response.data.data.user.token);
-    
 
     const getUser = await API.get("/user");
     localStorage.setItem("user", JSON.stringify(getUser.data.data));
-    
+
     dispatch({
       type: "LOGIN",
       payload: { ...getUser.data.data },
-     
-
     });
   } catch (error) {
     seterrLogin(true);
@@ -50,7 +47,7 @@ export const register = async (dispatch, body, seterrRegis) => {
 export const loadedService = async (dispatch) => {
   try {
     const token = localStorage.getItem("token");
-    
+
     if (!token) {
       return null;
     }
@@ -68,7 +65,7 @@ export const loadedService = async (dispatch) => {
 export const logoutService = (dispatch) => {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
-  
+
   Redirect("./");
   setAuthToken();
   dispatch({
@@ -138,13 +135,13 @@ export const addArt = (data) => {
     },
   };
   API.post("/upload-arts", data, config)
-    .then(() => alert("berhasil menambahkan art"))
+    .then(() => alert("Berhasil Menambahkan Art"))
     .catch((err) => console.log(err));
 };
 
 export const addHired = (data, cbSuccess) => {
   API.post("/hired", data)
-    .then(() => cbSuccess())
+    .then((res) => cbSuccess(res.data.data.hired))
     .catch((err) => console.log(err));
 };
 

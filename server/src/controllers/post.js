@@ -64,6 +64,13 @@ exports.getPostById = async (req, res) => {
           attributes: {
             exclude: ["createdAt", "updatedAt", "password"],
           },
+          include: {
+            model: Profile,
+            as: "profile",
+            attributes: {
+              exclude: ["createdAt", "updatedAt", "userID", "id"],
+            },
+          },
         },
       ],
     });

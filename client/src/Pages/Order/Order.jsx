@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getOrder, getOffer } from "../../configs/services";
+import { Dropdown, DropdownButton } from "react-bootstrap";
 import Table from "./Table";
 import "./Order.css";
 import Header from "../../component/Header/Header";
@@ -14,26 +15,33 @@ function Order() {
   return (
     <div>
       <Header />
-      <div>
-        <button
-          className="btn"
-          onClick={() => {
-            setTable(false);
-          }}
+      <div style={{ marginTop: 60, display: "flex", marginLeft: 60 }}>
+        <DropdownButton
+          id="dropdown-item-button"
+          title="My Order"
+          size="sm"
+          variant="secondary"
         >
-          My Order
-        </button>
-        <button
-          className="btn"
-          onClick={() => {
-            setTable(true);
-          }}
-        >
-          My Offer
-        </button>
+          <Dropdown.Item
+            as="button"
+            onClick={() => {
+              setTable(false);
+            }}
+          >
+            My Order
+          </Dropdown.Item>
+          <Dropdown.Item
+            as="button"
+            onClick={() => {
+              setTable(true);
+            }}
+          >
+            My Offer
+          </Dropdown.Item>
+        </DropdownButton>
       </div>
       {(table ? dataOffer : dataOrder).length > 0 ? (
-        <div className="mt-50">
+        <div style={{ marginTop: 75 }}>
           {table ? (
             <Table table={table} data={dataOffer} />
           ) : (
@@ -41,7 +49,9 @@ function Order() {
           )}
         </div>
       ) : (
-        <div className="mt-50">
+        <div
+          style={{ marginTop: 75, display: "flex", justifyContent: "center" }}
+        >
           <h2>Empty</h2>
         </div>
       )}

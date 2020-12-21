@@ -1,17 +1,17 @@
 import { useState, useRef } from "react";
 import Dropzone from "../../component/Dropzone";
 import { addProject } from "../../configs/services";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import Header from "../../component/Header/Header";
 import "./Upload.css";
 
 function SendProject() {
   const [files, setFiles] = useState([]);
-
+  const { id } = useParams();
   const description = useRef();
   const router = useHistory();
-
+  let history = useHistory();
   const handleUpload = (e) => {
     e.preventDefault();
     const body = new FormData();
@@ -19,7 +19,7 @@ function SendProject() {
     files.forEach((file) => {
       body.append("fileName", file);
     });
-    addProject(body, () => router.push("/home"));
+    addProject(id, () => router.push("/home"), body);
   };
   return (
     <>
@@ -37,6 +37,9 @@ function SendProject() {
             ref={description}
           />
           <div className="box-btn-upload">
+            <Button className="cancel" onClick={() => history.goBack()}>
+              Cancel
+            </Button>
             <Button className="send-project" onClick={(e) => handleUpload(e)}>
               Send Project
             </Button>

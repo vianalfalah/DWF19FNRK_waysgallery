@@ -31,7 +31,14 @@ function App() {
     <div className="main-container">
       <Router>
         {loading ? (
-          <div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100vh",
+            }}
+          >
             <Spinner animation="border" size="sm" />
             <Spinner animation="border" />
             <Spinner animation="grow" size="sm" />

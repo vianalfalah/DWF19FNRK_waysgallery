@@ -77,3 +77,13 @@
 .send {
   width: 50px;
 }
+
+.cek {
+  width: 136px;
+  height: 30px;
+  left: 28px;
+  top: 9px;
+  color: white;
+  background: #0acf83;
+  border-radius: 5px;
+}

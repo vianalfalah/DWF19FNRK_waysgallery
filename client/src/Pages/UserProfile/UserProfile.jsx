@@ -14,7 +14,7 @@ function UserProfile() {
     console.log(getProfileById);
   }, []);
 
-  return profile ? (
+  return (
     <>
       <Header />
       {profile && (
@@ -28,7 +28,10 @@ function UserProfile() {
                   display: "flex",
                 }}
               >
-                <h4 className="text-4xl">Not Have Post</h4>
+                <img
+                  className="img"
+                  src="https://b.rgbimg.com/users/x/xy/xymonau/600/mHMBHVq.jpg"
+                />
               </div>
             ) : (
               <img
@@ -51,7 +54,12 @@ function UserProfile() {
               <h2>{profile.profile.greeting}</h2>
             </div>
           </div>
-          <div className="btn-hire" style={{ display: localStorage.user.fullName === profile.fullName ? 'none' : '' }} >
+          <div
+            className="btn-hire"
+            style={{
+              display: localStorage.user.id === profile.id ? "none" : "",
+            }}
+          >
             <Button className="follow">
               <p style={{ alignItems: "center", textAlign: "center" }}>
                 Follow
@@ -65,30 +73,36 @@ function UserProfile() {
               </Button>
             </Link>
           </div>
-          <div className="btn-hire" style={{ display: localStorage.user.fullName === profile.fullName ? '' : 'none' }}>
+          <div
+            className="btn-hire"
+            style={{
+              display: localStorage.user.id === profile.id ? "" : "none",
+            }}
+          >
             <Link to="/edit-profile">
               <Button className="edit">Edit Profile</Button>
             </Link>
           </div>
-          <h1>{profile.fullName}'s Work </h1>
-          <div className="box-arts">        
-          <div className="arts" style={{ display: "flex" , marginLeft: 15}}> 
-              
-                {profile.arts.length > 0 &&
-                  profile.arts.map((art) => (
-                    <img src={`${"http://localhost:5000/"}${art.images}`} style={{marginLeft: 15, marginBottom: 30}} />
-                  ))}
-              
-              </div>          
+          <h1>{profile.fullName}'s Art </h1>
+          <div className="box-arts">
+            <div className="arts" style={{ display: "flex", marginLeft: 15 }}>
+              {profile.arts.length > 0 &&
+                profile.arts.map((art) => (
+                  <img
+                    src={`${"http://localhost:5000/"}${art.images}`}
+                    style={{
+                      marginLeft: 15,
+                      marginBottom: 30,
+                      border: "1px solid #2fc4b2",
+                      borderRadius: 10,
+                    }}
+                  />
+                ))}
+            </div>
           </div>
         </div>
       )}
     </>
-  ) : (
-    <div>
-      <Header />
-      <div>Apa tuh</div>
-    </div>
   );
 }
 export default UserProfile;

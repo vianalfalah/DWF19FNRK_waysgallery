@@ -27,7 +27,10 @@ function Profile() {
                   display: "flex",
                 }}
               >
-                <h4 className="text-4xl">Not Have Post</h4>
+                <img
+                  className="img"
+                  src="https://b.rgbimg.com/users/x/xy/xymonau/600/mHMBHVq.jpg"
+                />
               </div>
             ) : (
               <img
@@ -58,10 +61,26 @@ function Profile() {
           </div>
           <h1>My Work Art</h1>
           <div className="box-arts">
-            <div className="arts" style={{ display: "flex" , marginLeft: 15}}>
+            <div
+              className="arts"
+              style={{
+                display: "flex",
+                marginLeft: 15,
+                marginBottom: 30,
+                flexWrap: "wrap",
+              }}
+            >
               {profile.user.arts.length > 0 &&
                 profile.user.arts.map((art) => (
-                  <img src={`${"http://localhost:5000/"}${art.images}`} style={{marginLeft: 15, marginBottom: 30}} />
+                  <img
+                    src={`${"http://localhost:5000/"}${art.images}`}
+                    style={{
+                      marginLeft: 15,
+                      marginBottom: 50,
+                      borderRadius: 10,
+                      border: "1px solid black",
+                    }}
+                  />
                 ))}
             </div>
           </div>

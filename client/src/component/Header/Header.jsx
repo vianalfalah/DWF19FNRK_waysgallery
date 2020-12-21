@@ -3,7 +3,8 @@ import { Link, useHistory } from "react-router-dom";
 import { Button, Navbar } from "react-bootstrap";
 import { Context } from "../../Context/Context";
 import { logoutService } from "../../configs/services";
-import userIcon from "../../assets/icon/userIcon.png";
+import USER from "../../assets/icons/user 1.svg";
+import ORDER from "../../assets/icons/order.svg";
 import "./Header.css";
 import { LOGO, PROFILE, LOGOUT } from "../../configs/icons";
 
@@ -45,7 +46,7 @@ function Header() {
             <Link to="/my-profile">
               <div className="dropdown-btn">
                 <img
-                  src={userIcon}
+                  src={USER}
                   alt="profile-icon"
                   className="dropdown-img-icon"
                 />
@@ -55,7 +56,7 @@ function Header() {
             <Link to="/order">
               <div className="dropdown-btn">
                 <img
-                  src={userIcon}
+                  src={ORDER}
                   alt="profile-icon"
                   className="dropdown-img-icon"
                 />
