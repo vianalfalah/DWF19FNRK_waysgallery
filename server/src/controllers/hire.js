@@ -157,27 +157,24 @@ exports.getOffer = async (req, res) => {
   }
 };
 
-// @desc Edit Transaction
-// @route Patch api/v1/transaction/:id
-// @access USER
 exports.editHired = async (req, res) => {
   try {
     const { id } = req.params;
-    const { body } = req.body;
-    const scema = Joi.object({
+    const { body } = req;
+    const schema = Joi.object({
       status: Joi.string().required(),
     });
     const { error } = schema.validate(body, {
       abortEarly: false,
     });
-    const hired = await Hired.findOne({ where: { id } });
-    if (!hired) {
+    const getHireById = await Hired.findOne({ where: { id } });
+    if (!getHireById) {
       return res.status(404).send({
         status: `Hired With id: ${id} Not Found`,
         data: null,
       });
     }
-    await Hired.update(body, { where: { id } });
+    const hired = await Hired.update(body, { where: { id } });
     const afterUpdate = await Hired.findOne({
       where: { id },
       attributes: {
@@ -193,7 +190,7 @@ exports.editHired = async (req, res) => {
         },
         {
           model: User,
-          as: "order",
+          as: "orders",
           attributes: {
             exclude: ["createdAt", "updatedAt", "password"],
           },
@@ -201,9 +198,9 @@ exports.editHired = async (req, res) => {
       ],
     });
     res.send({
-      status: responseSuccess,
+      status: responSuccess,
       message: "succesfully update Hired",
-      data: { transaction: afterUpdate },
+      data: { hired: afterUpdate },
     });
   } catch (error) {
     console.log(error);

@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { Navbar } from "react-bootstrap";
+import { Button, Navbar } from "react-bootstrap";
 import { Context } from "../../Context/Context";
 import { logoutService } from "../../configs/services";
 import userIcon from "../../assets/icon/userIcon.png";
@@ -30,7 +30,9 @@ function Header() {
             <img src={LOGO} alt="logo" />
           </div>
         </Link>
-        <div className="align-center"></div>
+        <Link to="/upload">
+          <Button className="upload">Upload</Button>
+        </Link>
 
         <div className="dropdown">
           <img
@@ -48,6 +50,16 @@ function Header() {
                   className="dropdown-img-icon"
                 />
                 <p className="dropdown-text profile-text">Profile</p>
+              </div>
+            </Link>
+            <Link to="/order">
+              <div className="dropdown-btn">
+                <img
+                  src={userIcon}
+                  alt="profile-icon"
+                  className="dropdown-img-icon"
+                />
+                <p className="dropdown-text profile-text">Order</p>
               </div>
             </Link>
             <div onClick={onLogout} className="dropdown-btn">

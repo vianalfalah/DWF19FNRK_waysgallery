@@ -1,0 +1,96 @@
+.box-upload {
+  position: absolute;
+  width: 634px;
+  height: 610px;
+  left: 170px;
+  top: 179px;
+}
+
+.title-upload {
+  position: absolute;
+  width: 350px;
+  height: 372px;
+  left: 850px;
+  top: 207px;
+}
+
+.title-upload .title {
+  width: 350px;
+  height: 50px;
+  background: #e7e7e7;
+  border: 2px solid #2fc4b2;
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding-left: 12px;
+}
+
+.title-upload .description {
+  width: 350px;
+  height: 198px;
+  background: #e7e7e7;
+  border: 2px solid #2fc4b2;
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding-left: 12px;
+}
+
+.box-btn-upload {
+  width: 350px;
+  height: 32px;
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+}
+
+.cancel {
+  width: 100px;
+  height: 32px;
+  color: black;
+  background: #e7e7e7;
+  border-radius: 5px;
+  border: 0;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+}
+
+.post {
+  width: 100px;
+  height: 32px;
+  margin-left: 24px;
+  background: #2fc4b2;
+  color: white;
+  border-radius: 5px;
+  border: 0;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+}
+
+.send-project {
+  width: 150px;
+  height: 32px;
+  margin-left: 24px;
+  background: #2fc4b2;
+  color: white;
+  border-radius: 5px;
+  border: 0;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+}

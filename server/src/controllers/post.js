@@ -1,4 +1,4 @@
-const { Post, Photo, User } = require("../../models");
+const { Post, Photo, User, Profile } = require("../../models");
 const responSuccess = "Response Success";
 const Joi = require("joi");
 
@@ -6,6 +6,7 @@ exports.getPosts = async (req, res) => {
   try {
     const posts = await Post.findAll({
       attributes: { exclude: ["createdAt", "updatedAt", "userID"] },
+      order: [["createdAt", "DESC"]],
       include: [
         {
           model: Photo,
@@ -48,6 +49,7 @@ exports.getPostById = async (req, res) => {
       where: {
         id,
       },
+      order: [["createdAt", "DESC"]],
       include: [
         {
           model: Photo,
@@ -96,8 +98,8 @@ exports.addPost = async (req, res) => {
 
     const schema = Joi.object({
       title: Joi.string().min(5).required(),
-      description: Joi.string().min(10).required(),
-      images: Joi.array().required(),
+      description: Joi.string().min(8).required(),
+      images: Joi.array(),
     });
 
     const { error } = schema.validate(

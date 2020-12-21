@@ -47,8 +47,11 @@ function Landing() {
           <img src={VECTOR2} alt="vector2" className="vector2" />
         </div>
         {isLogin ? (
-          <Button className="join" onClick={() => history.push("/home")}>
-            <p style={{ alignItems: "center", textAlign: "center" }}>Home</p>
+          <Button
+            className="join grp-btn p"
+            onClick={() => history.push("/home")}
+          >
+            <p>Home</p>
           </Button>
         ) : (
           <NotLogin dispatch={dispatch} state={state} />

@@ -1,0 +1,41 @@
+.dropzone {
+  height: 478px;
+
+  border: 5px dashed #b2b2b2;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+.dropzone2 {
+  height: 465px;
+}
+.dropzone3 {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.icon-upload {
+  width: 250px;
+  height: 250px;
+  left: 193px;
+}
+
+.icon-plus {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 200px;
+  height: 100px;
+  top: 20px;
+  border: 5px dashed #b2b2b2;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin: 10px;
+}
+
+.dropzone h5 {
+  font-family: Poppins;
+  justify-content: center;
+  display: flex;
+}

@@ -4,10 +4,11 @@ const Joi = require("joi");
 
 exports.sendProject = async (req, res) => {
   try {
-    const { id: hiredID } = req.params;
+    const { id: hireID } = req.params;
     const { id: userID } = req.user;
+    const files = req.files;
     const hired = await Hired.findOne({
-      where: { id: hiredID },
+      where: { id: hireID },
     });
     if (!hired) {
       return res.status(404).send({
@@ -22,7 +23,7 @@ exports.sendProject = async (req, res) => {
         data: {},
       });
     }
-    const { body } = req.body;
+
     const schema = Joi.object({
       description: Joi.string().min(8).required(),
     });
@@ -32,64 +33,40 @@ exports.sendProject = async (req, res) => {
         abortEarly: false,
       }
     );
+    const { description } = req.body;
     const project = await Project.create({
-      description: body.description,
-      hiredID,
+      description,
+      hireID,
     });
-    res.send({
-      status: responSuccess,
-      message: "succesfully send project",
-      data: {
-        project: {
-          id: project.id,
-          description: project.description,
-          hiredID,
-        },
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send({
-      error: {
-        message: "Server Error",
-      },
-    });
-  }
-};
+    const image = async () => {
+      await Promise.all(
+        files.map(async (image) => {
+          await ProjectFiles.create({
+            projectID: project.id,
+            fileName: image.filename,
+          });
+        })
+      );
+    };
+    await Hired.update({ status: "Success" }, { where: { id: hireID } });
 
-exports.addProjectFiles = async (req, res) => {
-  try {
-    const { id: projectID } = req.params;
-    const file = req.files;
-    const project = await Project.findOne({ where: { id: projectID } });
-    if (!project) {
-      return res.status(404).send({
-        status: `Project With id: ${id} Not Found`,
-        data: null,
-      });
-    }
-    await Promise.all(
-      file.map(async (image) => {
-        await ProjectFiles.create({
-          projectID,
-          fileName: image.path,
-        });
-      })
-    );
-    const afterAdd = await Project.findOne({
-      where: { id: projectID },
-      attributes: { exclude: ["createdAt", "updatedAt"] },
-      include: {
-        model: ProjectFiles,
-        as: "files",
+    image().then(async () => {
+      const afterSend = await Project.findOne({
+        where: { id: project.id },
         attributes: { exclude: ["createdAt", "updatedAt"] },
-      },
-    });
-
-    res.send({
-      status: responSuccess,
-      message: "Succesfully add Files",
-      data: { project: afterAdd },
+        include: {
+          model: ProjectFiles,
+          as: "files",
+          attributes: { exclude: ["createdAt", "updatedAt"] },
+        },
+      });
+      res.send({
+        status: responSuccess,
+        message: "succesfully send project",
+        data: {
+          project: afterSend,
+        },
+      });
     });
   } catch (error) {
     console.log(error);

@@ -10,9 +10,11 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
+      localStorage.setItem('id', action.payload.id)
       return {
         ...state,
         user: {
+          id: action.payload.id,
           email: action.payload.email,
           fullName: action.payload.fullName,
         },
@@ -28,6 +30,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         user: {
+          id: action.payload.id,
           email: action.payload.email,
           fullName: action.payload.fullName,
         },

@@ -8,13 +8,18 @@ export const login = async (dispatch, body, seterrLogin) => {
   try {
     const response = await API.post("/login", body);
     await setAuthToken(response.data.data.user.token);
+    
     localStorage.setItem("token", response.data.data.user.token);
+    
 
     const getUser = await API.get("/user");
-    // localStorage.setItem("user", JSON.stringify(getUser.data.data));
+    localStorage.setItem("user", JSON.stringify(getUser.data.data));
+    
     dispatch({
       type: "LOGIN",
       payload: { ...getUser.data.data },
+     
+
     });
   } catch (error) {
     seterrLogin(true);
@@ -45,6 +50,7 @@ export const register = async (dispatch, body, seterrRegis) => {
 export const loadedService = async (dispatch) => {
   try {
     const token = localStorage.getItem("token");
+    
     if (!token) {
       return null;
     }
@@ -61,7 +67,8 @@ export const loadedService = async (dispatch) => {
 
 export const logoutService = (dispatch) => {
   localStorage.removeItem("token");
-  localStorage.removeItem("users");
+  localStorage.removeItem("user");
+  
   Redirect("./");
   setAuthToken();
   dispatch({
@@ -100,46 +107,85 @@ export const getProfileById = async (id, cbSuccess) => {
   }
 };
 
-export const getTransactions = async (cbSuccess) => {
-  try {
-    const transactions = await API.get("/transactions");
-    console.log(transactions.data.data.transactions);
-    cbSuccess(transactions.data.data.transactions);
-  } catch (error) {
-    console.log(error);
-  }
-};
-export const editStatusTransaction = (id, status) => {
-  API.patch(`transaction/${id}`, status)
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err));
-};
-
-export const addTransaction = (data, cbSuccess) => {
+export const addPost = (data, cbSuccess) => {
   const config = {
     headers: {
       "content-type": "multipart/form-data",
     },
   };
-  API.post("/transaction", data, config)
+  API.post("/post/add", data, config)
+    .then((res) => {
+      cbSuccess();
+    })
+    .catch((err) => console.log(err));
+};
+
+export const editProfile = (data, cbSuccess) => {
+  const config = {
+    headers: {
+      "content-type": "multipart/form-data",
+    },
+  };
+  API.patch("/user", data, config)
     .then(() => cbSuccess())
     .catch((err) => console.log(err));
 };
 
-export const getMyTransactions = (setTransactions) => {
-  API.get("/my-transactions")
-    .then((res) => setTransactions(res.data.data.transactions))
+export const addArt = (data) => {
+  const config = {
+    headers: {
+      "content-type": "multipart/form-data",
+    },
+  };
+  API.post("/upload-arts", data, config)
+    .then(() => alert("berhasil menambahkan art"))
     .catch((err) => console.log(err));
 };
 
-////////Use Query
-// export const getProfile = () => {
-//   const url = "/user";
-//   return API.get(url).then((res) => res.data.data);
-// };
+export const addHired = (data, cbSuccess) => {
+  API.post("/hired", data)
+    .then(() => cbSuccess())
+    .catch((err) => console.log(err));
+};
 
-// export const getProfileById = ({ queryKey }) => {
-//   const id = queryKey[1];
-//   const url = `/user/${id}`;
-//   return API.get(url).then((res) => res.data.data);
-// };
+export const getOrder = (cbSuccess) => {
+  API.get("/my-order")
+    .then((res) => cbSuccess(res.data.data.order))
+    .catch((err) => console.log(err));
+};
+
+export const getOffer = (cbSuccess) => {
+  API.get("/my-offer")
+    .then((res) => cbSuccess(res.data.data.offer))
+    .catch((err) => console.log(err));
+};
+
+export const editStatusHired = (id, status, cbSuccess) => {
+  API.patch(`/hired/${id}`, status)
+    .then(() => cbSuccess("sukses edit status silahkan refresh"))
+    .catch((err) => console.log(err));
+};
+
+export const addProject = async (id, cbSuccess, data) => {
+  const config = {
+    headers: {
+      "content-type": "multipart/form-data",
+    },
+  };
+  try {
+    API.post(`/send-project/${id}`, data, config)
+      .then((res) => {
+        cbSuccess();
+        editStatusHired(id, { status: "Success" }, null);
+      })
+      .catch((err) => console.log(err));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getProject = (id, cbSuccess) => {
+  API.get(`/project/${id}`)
+    .then((res) => cbSuccess(res.data.data.project))
+    .catch((err) => console.log(err));
+};

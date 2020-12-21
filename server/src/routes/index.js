@@ -49,14 +49,9 @@ router.get("/my-offer", auth, getOffer);
 router.patch("/hired/:id", auth, editHired);
 
 //Project
-const {
-  sendProject,
-  addProjectFiles,
-  getProjectById,
-} = require("../controllers/project");
+const { sendProject, getProjectById } = require("../controllers/project");
 
-router.post("/send-project/:id", auth, sendProject);
+router.post("/send-project/:id", auth, uploadImage("fileName"), sendProject);
 router.get("/project/:id", auth, getProjectById);
-router.post("/add-file/:id", auth, uploadImage("fileName"), addProjectFiles);
 
 module.exports = router;

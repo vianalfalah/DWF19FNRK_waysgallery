@@ -1,0 +1,71 @@
+.form-hired {
+  position: absolute;
+  width: 760px;
+  height: 562px;
+  top: 200px;
+  left: 300px;
+}
+
+.form-hired .title {
+  width: 750px;
+  height: 50px;
+  background: #e7e7e7;
+  border: 2px solid #2fc4b2;
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding-left: 12px;
+  justify-content: center;
+}
+
+.form-hired .description {
+  width: 750px;
+  height: 200px;
+  background: #e7e7e7;
+  border: 2px solid #2fc4b2;
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding-left: 12px;
+}
+
+.form-hired .date {
+  width: 750px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.form-hired .date input {
+  text-align: right;
+}
+.form-hired .date input[type="date"]:before {
+  color: grey;
+  content: attr(placeholder);
+  margin-right: 0.5em;
+}
+
+.form-hired .date .start {
+  width: 354px;
+}
+.form-hired .date .end {
+  width: 354px;
+  margin-left: 44px;
+}
+
+.form-hired .price {
+  width: 750px;
+  height: 50px;
+  background: #e7e7e7;
+  border: 2px solid #2fc4b2;
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding-left: 12px;
+}
+
+.box-btn-binding {
+  width: 750px;
+  height: 32px;
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}

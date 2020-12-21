@@ -5,11 +5,14 @@ const Joi = require("joi");
 exports.getUser = async (req, res) => {
   try {
     const { id } = req.user;
+    // const latestPost = await Post.max("id", { where: { userID: id } });
+    // const latestArt = await Art.max("id", { where: { userID: id } });
     const user = await User.findOne({
       where: { id },
       attributes: {
         exclude: ["createdAt", "updatedAt", "password"],
       },
+
       include: [
         {
           model: Profile,
@@ -21,7 +24,10 @@ exports.getUser = async (req, res) => {
         {
           model: Post,
           as: "posts",
-          attributes: { exclude: ["createdAt", "updatedAt", "userID"] },
+
+          attributes: {
+            exclude: ["createdAt", "updatedAt", "userID"],
+          },
           include: {
             model: Photo,
             as: "photos",
@@ -31,6 +37,7 @@ exports.getUser = async (req, res) => {
         {
           model: Art,
           as: "arts",
+
           attributes: { exclude: ["createdAt", "updatedAt", "userID"] },
         },
       ],
@@ -50,7 +57,7 @@ exports.getUser = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.satus(500).json({
+    res.status(500).json({
       status: "error",
       error: {
         message: "Internal Server Error",
@@ -67,6 +74,7 @@ exports.getUserProfileById = async (req, res) => {
       attributes: {
         exclude: ["createdAt", "updatedAt", "password"],
       },
+
       include: [
         {
           model: Profile,
@@ -80,6 +88,7 @@ exports.getUserProfileById = async (req, res) => {
           as: "posts",
           attributes: {
             exclude: ["createdAt", "updatedAt", "userID"],
+            order: [["createdAt", "DESC"]],
           },
           include: {
             model: Photo,

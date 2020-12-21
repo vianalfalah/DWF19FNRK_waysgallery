@@ -1,4 +1,4 @@
-const { User, Profile } = require("../../models");
+const { User, Profile, Post, Art, Photos } = require("../../models");
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -47,6 +47,7 @@ exports.register = async (req, res) => {
     await Profile.create({
       userID: user.id,
       avatar: "default",
+      greeting: "Hi, Nice To Meet You !!!",
     });
 
     const privateKey = "vian-alfalah";
